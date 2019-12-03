@@ -1,9 +1,9 @@
 # История формата
 
-`ORC: Optimized RC Format` (где RC = Record Columnar), собственно базируется на своем предшественнике (RC Format-е) и 
+ORC: Optimized RC Format (где RC = Record Columnar), собственно базируется на своем предшественнике (RC Format-е) и 
 всего-лишь
 
-  the smallest, fastest columnar storage for Hadoop workloads
+`the smallest, fastest columnar storage for Hadoop workloads`
   
 (это цитата с главной страницы проекта - https://orc.apache.org/. Немного погрузившись - я ей верю...)
 
