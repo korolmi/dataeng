@@ -39,6 +39,10 @@
 
 ## Примеры файлов
 
+В примерах предполагается, что Airflow использует mySQL.
+
+### /usr/lib/systemd/system/airflow-scheduler.service
+
     [Unit]
     Description=Airflow scheduler daemon
     After=network.target mysql.service 
@@ -56,4 +60,35 @@
     [Install]
     WantedBy=multi-user.target
 
-Что делаем
+### /usr/lib/systemd/system/airflow-webserver.service
+
+    [Unit]
+    Description=Airflow webserver daemon
+    After=network.target mysql.service
+    Wants=mysql.service
+    
+    [Service]
+    EnvironmentFile=/etc/airflow/airflow
+    User=mluser
+    Group=mluser
+    Type=simple
+    ExecStart=/usr/local/bin/airflow webserver --pid /run/airflow/webserver.pid
+    Restart=on-failure
+    RestartSec=5s
+    PrivateTmp=true
+    
+    [Install]
+    WantedBy=multi-user.target
+
+### /etc/airflow/airflow
+
+    # This file is the environment file for Airflow. Put this file in /etc/sysconfig/airflow per default
+    # configuration of the systemd unit files.
+    #
+    AIRFLOW_CONFIG=/home/mluser/airflow/airflow.cfg
+    AIRFLOW_HOME=/home/mluser/airflow
+
+### /usr/lib/tmpfiles.d/airflow.conf
+
+    d /run/airflow 0755 mluser mluser
+
