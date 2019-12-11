@@ -39,22 +39,21 @@
 
 ## Примеры файлов
 
-`
-[Unit]
-Description=Airflow scheduler daemon
-After=network.target mysql.service 
-Wants=mysql.service
+    [Unit]
+    Description=Airflow scheduler daemon
+    After=network.target mysql.service 
+    Wants=mysql.service
+    
+    [Service]
+    EnvironmentFile=/etc/airflow/airflow
+    User=mluser
+    Group=mluser
+    Type=simple
+    ExecStart=/usr/local/bin/airflow scheduler
+    Restart=always
+    RestartSec=5s
+    
+    [Install]
+    WantedBy=multi-user.target
 
-[Service]
-EnvironmentFile=/etc/airflow/airflow
-User=mluser
-Group=mluser
-Type=simple
-ExecStart=/usr/local/bin/airflow scheduler
-Restart=always
-RestartSec=5s
-
-[Install]
-WantedBy=multi-user.target
-`
 Что делаем
